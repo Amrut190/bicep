@@ -1,0 +1,5 @@
+variables:
+  az_serviceconnection: 'sandbox-sc'
+  region-suffix: "eu"
+  location: "east us"
+  environment-name: "sandbox"
