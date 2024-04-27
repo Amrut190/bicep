@@ -37,6 +37,7 @@ stages:
       inputs:
         deploymentScope: 'Resourcegroup'
         azureResourceManagerConnection: '$(azureServiceConnection)'
+        subscriptionId: 'dc2b1a3b-1f25-405f-a2ed-e8bdbbf14c83'
         location: '$(location)'
         templateLocation: 'Linked artifact'
         csmFile: '$(Build.SourcesDirectory)/$(templateFile)'
