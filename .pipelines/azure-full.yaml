@@ -12,7 +12,7 @@ variables:
   templateFile: 'arm/resource_group/template.bicep'
   templateParameterFile: 'arm/resource_group/parameters.json'
 
-pool: Default
+pool:
   vmImage: $(vmImageName)
 
 stages:  
