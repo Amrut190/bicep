@@ -11,6 +11,7 @@ variables:
   location: 'eastus'
   templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
   templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
+  resourceGroupname: budgetrg
 
 pool: default
   # vmImage: $(vmImageName)
@@ -56,7 +57,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az group create --name $(resourceGroup) --location $(location)
+          az group create --name $(resourceGroupname) --location $(location)
           az deployment group what-if \
             --template-file 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep' \
             --parameters 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam' \
