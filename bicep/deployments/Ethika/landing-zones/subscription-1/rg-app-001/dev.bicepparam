@@ -2,6 +2,7 @@ using 'main.bicep'
 
 param environment = 'dev'
 param name = 'kv-example-0018666'
+location = 'eastus'
 
 // Key Vault should only accept explicitly allowed traffic through the firewall.
 // Set to 'Allow' to fail Azure.KeyVault.Firewall.
