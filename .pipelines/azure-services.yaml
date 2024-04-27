@@ -1,0 +1,132 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger: none
+
+pool:
+ vmimage: windows-latest
+
+resources:
+  repositories:
+    - repository: pipelines #alias name
+      type: git #type of repository
+      name: pipelines-repository #repository name
+      ref: 'refs/heads/main' #git branch reference
+
+parameters:
+- name: environment
+  displayName: Environment for which we need to spin resources.
+  values:
+   - sandbox
+   - Dev
+   - qa
+   - pre-prod
+   - prod
+
+- name: rg
+  displayName: Resource Group
+  type: boolean
+  default: false
+
+- name: sa
+  displayName: Storage Account
+  type: boolean
+  default: false
+
+- name: ai
+  displayName: App Insights
+  type: boolean
+  default: false
+
+- name: asp
+  displayName: App Service Plan
+  type: boolean
+  default: false
+
+- name: as
+  displayName: App Service
+  type: boolean
+  default: false
+
+- name: kv
+  displayName: Key Vault
+  type: boolean
+  default: false
+
+- name: sb
+  displayName: ServiceBus
+  type: boolean
+  default: false
+
+- name: asqlsvr
+  displayName: Azure SQL Server
+  type: boolean
+  default: false
+
+- name: asqldb
+  displayName: Azure SQL Database
+  type: boolean
+  default: false
+
+- name: sqlvm
+  displayName: SQl On VM
+  type: boolean
+  default: false
+   
+- name: rgn
+  displayName: Enter Resource Group name
+  type: string
+
+- name: appname
+  displayName: Enter app name for which the resources are created.
+  type: string
+
+variables:
+- group: ssh_variable_group
+- group: host-info
+- name: env
+  value: ${{ parameters.environment }}  
+- template: env-vars/common.yml
+- template: env-vars/${{ parameters.environment }}-variables.yml
+- name: rg
+  value: ${{ parameters.rgn }}
+# - name: folder
+#   value: ${{ parameters.resourcetype }}
+- name: app
+  value: ${{ parameters.appname }}
+       
+
+steps:
+- task: PowerShell@2
+  displayName: 'List resources'
+  inputs:
+    targetType: 'inline'
+    script: |  
+      $resources = [System.Collections.ArrayList]@()
+      if("${{ parameters.rg }}" -eq "True" ){$resources.Add("resource-group")}
+      if("${{ parameters.sa }}" -eq "True" ){ $resources.Add("storage-account")}
+      if("${{ parameters.ai }}" -eq "True"){ $resources.Add("app-insights")}
+      if("${{ parameters.asp }}" -eq "True"){ $resources.Add("app-service-plan")}
+      if("${{ parameters.as }}" -eq "True"){ $resources.Add("app-service")}
+      if("${{ parameters.kv }}" -eq "True"){ $resources.Add("keyvault")}
+      if("${{ parameters.sb }}" -eq "True"){ $resources.Add("servicebus")}
+      if("${{ parameters.asqldb }}" -eq "True"){ $resources.Add("azure-sql-database")}
+      if("${{ parameters.asqlsvr }}" -eq "True"){ $resources.Add("azure-sql-server")}
+      if("${{ parameters.sqlvm }}" -eq "True"){ $resources.Add("sql-on-vm")}
+      # copy TF files from common folder.
+      Copy-Item -Path "$(System.DefaultWorkingDirectory)\common\*.tf" -Destination "$(Pipeline.Workspace)" -Recurse
+      foreach ($res in $resources){
+          Copy-Item -Path "$(System.DefaultWorkingDirectory)\$res\*.tf" -Destination "$(Pipeline.Workspace)" -Recurse
+      }
+      write-host $resources
+
+- template: iac-pipeline-services.yml@pipelines
+  parameters:
+     az_serviceconnection: $(az_serviceconnection)
+     # az_kv_name: $(az_kv_name)
+     tf_backend_rg: $(tf_backend_rg)
+     tf_backend_sa: $(tf_backend_sa)
+     tf_backend_container: $(tf_backend_container)
+     tf_backend_sfn: $(tf_backend_sfn)
