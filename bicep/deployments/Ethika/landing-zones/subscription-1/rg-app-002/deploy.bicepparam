@@ -1,4 +1,4 @@
 using './deploy.bicep'
 
-param location = 'eastus''
+param location = 'eastus'
 
