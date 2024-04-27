@@ -9,8 +9,8 @@ variables:
 
   azureServiceConnection: 'ash2'
   location: 'australiaeast'
-  templateFile: 'arm/resource_group/template.bicep'
-  templateParameterFile: 'arm/resource_group/parameters.json'
+  templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
+  templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
 
 pool:
   vmImage: $(vmImageName)
@@ -55,8 +55,8 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az deployment sub what-if \
-            --template-file 'arm/resource_group/template.bicep' \
-            --parameters 'arm/resource_group/parameters.json' \
+            --template-file 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep' \
+            --parameters 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam' \
             --location '$(location)'
 
 - stage: Deploy
