@@ -1,0 +1,22 @@
+parameters: 
+- name: deploymentscope  # defaults for any parameters that aren't specified
+  default: 'Resourcegroup'
+- name: deploymentmode
+  default: 'validate'
+- name: RgName
+  default: 'budgetrg' 
+
+jobs:
+- job: BicepTemplate
+  steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: ${{ parameters.deploymentscope }} 
+        resourceGroupName: ${{ parameters.RgName }}
+        azureResourceManagerConnection: '$(azureServiceConnection)'
+        subscriptionId: 'dc2b1a3b-1f25-405f-a2ed-e8bdbbf14c83'
+        location: '$(location)'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(Build.SourcesDirectory)/$(templateFile)'
+        csmParametersFile: '$(Build.SourcesDirectory)/$(templateParameterFile)'
+        deploymentMode: ${{ parameters.deploymentmode }}  

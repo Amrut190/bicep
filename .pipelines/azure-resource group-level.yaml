@@ -29,22 +29,32 @@ stages:
         name: LintBicepCode
         displayName: Run Bicep linter
 
+# - stage: Validate
+#   dependsOn: Lint
+#   jobs: 
+#   - job: ValidateBicepTemplate
+#     steps:
+#     - task: AzureResourceManagerTemplateDeployment@3
+#       inputs:
+#         deploymentScope: 'Resourcegroup'
+#         resourceGroupName: 'budgetrg'
+#         azureResourceManagerConnection: '$(azureServiceConnection)'
+#         subscriptionId: 'dc2b1a3b-1f25-405f-a2ed-e8bdbbf14c83'
+#         location: '$(location)'
+#         templateLocation: 'Linked artifact'
+#         csmFile: '$(Build.SourcesDirectory)/$(templateFile)'
+#         csmParametersFile: '$(Build.SourcesDirectory)/$(templateParameterFile)'
+#         deploymentMode: 'Validation'        
+
 - stage: Validate
   dependsOn: Lint
-  jobs: 
-  - job: ValidateBicepTemplate
-    steps:
-    - task: AzureResourceManagerTemplateDeployment@3
-      inputs:
-        deploymentScope: 'Resourcegroup'
-        resourceGroupName: 'budgetrg'
-        azureResourceManagerConnection: '$(azureServiceConnection)'
-        subscriptionId: 'dc2b1a3b-1f25-405f-a2ed-e8bdbbf14c83'
-        location: '$(location)'
-        templateLocation: 'Linked artifact'
-        csmFile: '$(Build.SourcesDirectory)/$(templateFile)'
-        csmParametersFile: '$(Build.SourcesDirectory)/$(templateParameterFile)'
-        deploymentMode: 'Validation'        
+  jobs:
+  - template: templates/npm-with-params.yml  # Template reference
+    parameters:
+    deploymentScope: 'Resourcegroup'
+    deploymentmode: 'Validation' 
+    RgName: 'budgetrg'
+
 
 - stage: Preview
   dependsOn: Validate
@@ -63,27 +73,27 @@ stages:
             --parameters 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam' \
             --resource-group $(resourceGroupname)
 
-- stage: Deploy
-  jobs:
-    - deployment: Deploy
-      environment: BicepEnvironment
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - checkout: self
+# - stage: Deploy
+#   jobs:
+#     - deployment: Deploy
+#       environment: BicepEnvironment
+#       strategy:
+#         runOnce:
+#           deploy:
+#             steps:
+#             - checkout: self
 
-            - task: AzureResourceManagerTemplateDeployment@3
-              name: DeployBicepTemplate
-              inputs:
-                deploymentScope: 'Resourcegroup'
-                resourceGroupName: 'budgetrg'
-                azureResourceManagerConnection: '$(azureServiceConnection)'
-                subscriptionId: 'dc2b1a3b-1f25-405f-a2ed-e8bdbbf14c83'
-                action: 'Create Or Update Resource Group'
-                location: '$(location)'
-                templateLocation: 'Linked artifact'
-                csmFile: '$(Build.SourcesDirectory)/$(templateFile)'
-                csmParametersFile: '$(Build.SourcesDirectory)/$(templateParameterFile)'
-                deploymentMode: 'Incremental'
-                deploymentName: 'DeployPipelineTemplate'
+#             - task: AzureResourceManagerTemplateDeployment@3
+#               name: DeployBicepTemplate
+#               inputs:
+#                 deploymentScope: 'Resourcegroup'
+#                 resourceGroupName: 'budgetrg'
+#                 azureResourceManagerConnection: '$(azureServiceConnection)'
+#                 subscriptionId: 'dc2b1a3b-1f25-405f-a2ed-e8bdbbf14c83'
+#                 action: 'Create Or Update Resource Group'
+#                 location: '$(location)'
+#                 templateLocation: 'Linked artifact'
+#                 csmFile: '$(Build.SourcesDirectory)/$(templateFile)'
+#                 csmParametersFile: '$(Build.SourcesDirectory)/$(templateParameterFile)'
+#                 deploymentMode: 'Incremental'
+#                 deploymentName: 'DeployPipelineTemplate'
