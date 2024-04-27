@@ -1,0 +1,3 @@
+variables:
+  org-suffix: "eth"
+  vmImage: "ubuntu-latest"
