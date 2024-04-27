@@ -1,5 +1,5 @@
 variables:
-  az_serviceconnection: 'dev-sc'
+  az_serviceconnection: 'ash2'
   region-suffix: "eu"
   location: "east us"
   environment-name: "dev"
