@@ -1,7 +1,8 @@
 targetScope = 'resourceGroup'
 
+
 param name string
-param location string = resourceGroup().location
+param location 
 
 @allowed([
   'Allow'
