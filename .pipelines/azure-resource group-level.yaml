@@ -61,7 +61,7 @@ stages:
           az deployment group what-if \
             --template-file 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep' \
             --parameters 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam' \
-            --location '$(location)'
+            --location '$(location)' --g $(resourceGroupname)
 
 - stage: Deploy
   jobs:
@@ -77,6 +77,7 @@ stages:
               name: DeployBicepTemplate
               inputs:
                 deploymentScope: 'Resourcegroup'
+                resourceGroupName: 'budgetrg'
                 azureResourceManagerConnection: '$(azureServiceConnection)'
                 action: 'Create Or Update Resource Group'
                 location: '$(location)'
