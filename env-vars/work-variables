@@ -1,0 +1,5 @@
+variables:
+  az_serviceconnection: 'work-sc'
+  region-suffix: "eu"
+  location: "east us"
+  environment-name: "work"
