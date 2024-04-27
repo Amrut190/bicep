@@ -2,7 +2,7 @@ using 'main.bicep'
 
 param environment = 'dev'
 param name = 'kv-example-0018666'
-param resourceGroupName = 'budgetrg'
+param resourceGroup = 'budgetrg'
 //param location string = resourceGroup().location // Location for all resources 
 
 // Key Vault should only accept explicitly allowed traffic through the firewall.
