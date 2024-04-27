@@ -61,7 +61,7 @@ stages:
           az deployment group what-if \
             --template-file 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep' \
             --parameters 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam' \
-            --location '$(location)' --g $(resourceGroupname)
+            --location '$(location)' --resource-group $(resourceGroupname)
 
 - stage: Deploy
   jobs:
