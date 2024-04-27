@@ -12,7 +12,7 @@ variables:
   templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
   templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
 
-pool: 'Azure Pipelines'
+pool: default
   # vmImage: $(vmImageName)
 
 stages:  
