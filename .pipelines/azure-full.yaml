@@ -5,15 +5,15 @@ name: Deploy Bicep files
 
 
 variables:
-  vmImageName: 'ubuntu-latest'
+  # vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'ash2'
   location: 'australiaeast'
   templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
   templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
 
-pool:
-  vmImage: $(vmImageName)
+pool: Default
+  # vmImage: $(vmImageName)
 
 stages:  
 
