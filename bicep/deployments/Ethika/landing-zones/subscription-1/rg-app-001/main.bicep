@@ -2,7 +2,7 @@ targetScope = 'resourceGroup'
 
 
 param name string
-param location 
+param location string
 
 @allowed([
   'Allow'
