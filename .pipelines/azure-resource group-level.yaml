@@ -79,6 +79,7 @@ stages:
                 deploymentScope: 'Resourcegroup'
                 resourceGroupName: 'budgetrg'
                 azureResourceManagerConnection: '$(azureServiceConnection)'
+                subscriptionId: 'dc2b1a3b-1f25-405f-a2ed-e8bdbbf14c83'
                 action: 'Create Or Update Resource Group'
                 location: '$(location)'
                 templateLocation: 'Linked artifact'
