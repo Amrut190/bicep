@@ -1,0 +1,52 @@
+#
+# Analyze repository with PSRule for Azure
+# https://azure.github.io/PSRule.Rules.Azure/setup/setup-bicep/
+
+# Note:
+# This pipelines is designed to run in templated repositories to check Azure Infrastructure as Code.
+
+# For PSRule for Azure documentation see:
+# https://aka.ms/ps-rule-azure
+
+# For Azure Pipeline extension details see:
+# https://aka.ms/ps-rule-pipelines
+
+# Set the triggers to automatically start this pipeline.
+trigger:
+  branches:
+    include:
+    - main
+
+variables:
+- name: PSRULE_AZURE_BICEP_USE_AZURE_CLI
+  value: true
+- name: PSRULE_CONFIGURATION_AZURE_BICEP_FILE_EXPANSION
+  value: true
+- name: PSRULE_AZURE_BICEP_PATH
+  value: 'C:\agent\_work\_temp\.azclitask\bin\bicep'
+
+stages:
+
+- stage: analyze
+  displayName: Analyze
+  jobs:
+
+  - job: analyze_repo
+    displayName: Analyze repository
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+
+    # Run analysis by using the PSRule Azure Pipelines extension.
+    # This needs to be pre-installed within your organization by visiting https://aka.ms/ps-rule-pipelines.
+    - task: ps-rule-assert@2
+      displayName: Run PSRule analysis
+      inputs:
+        modules: PSRule.Rules.Azure
+        outputFormat: Sarif
+        outputPath: reports/ps-rule-results.sarif
+
+    - publish: $(System.DefaultWorkingDirectory)/reports/ps-rule-results.sarif
+      artifact: CodeAnalysisLogs
+      displayName: Publish SARIF logs
+      condition: succeededOrFailed()
