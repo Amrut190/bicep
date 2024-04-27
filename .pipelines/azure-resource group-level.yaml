@@ -35,7 +35,7 @@ stages:
     steps:
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
-        deploymentScope: 'Subscription'
+        deploymentScope: 'Resourcegroup'
         azureResourceManagerConnection: '$(azureServiceConnection)'
         location: '$(location)'
         templateLocation: 'Linked artifact'
@@ -73,7 +73,7 @@ stages:
             - task: AzureResourceManagerTemplateDeployment@3
               name: DeployBicepTemplate
               inputs:
-                deploymentScope: 'Subscription'
+                deploymentScope: ''Resourcegroup'
                 azureResourceManagerConnection: '$(azureServiceConnection)'
                 action: 'Create Or Update Resource Group'
                 location: '$(location)'
