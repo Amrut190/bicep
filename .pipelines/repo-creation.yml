@@ -33,7 +33,7 @@ stages:
         az repos create --name ${{parameters.RepoName}}
    
         echo "Cloning the repository..."
-        git clone $(orgUrl)/$(projectName)/${{parameters.RepoName}} ${{parameters.RepoName}}
+        git clone $(orgUrl)/$(projectName)/_git/${{parameters.RepoName}} ${{parameters.RepoName}}
         cd ${{parameters.RepoName}}
         mkdir folder1 folder2 folder3
         git add .
