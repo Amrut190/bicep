@@ -3,50 +3,46 @@ trigger:
 
 name: Create Repo
 
-
 variables:
-  # vmImageName: 'ubuntu-latest'
-
   azureServiceConnection: 'ash2'
-  location: 'eastus'
-  templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
-  templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
-  resourceGroupname: budgetrg
+  # location: 'eastus'
+  # templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
+  # templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
+  # resourceGroupName: 'budgetrg'
 
-pool: default
-  # vmImage: $(vmImageName)
+pool:
+  name: 'Azure Pipelines'
+  vmImage: 'ubuntu-latest'
 
-stages:  
-
-- stage: Create Repo
+stages:
+- stage: Create_Repo
   jobs:
-  - job: Create Repo
-    displayName: Create Repo
-steps:
-- script: |
-    echo "Logging in to Azure..."
-    az login --service-principal -u $(clientId) -p $(clientSecret) --tenant $(tenantId)
-   
-    echo "Configuring defaults..."
-    az devops configure --defaults organization=$(orgUrl) project=$(projectName)
-   
-    echo "Creating a new Azure Repo named $(repoName)..."
-    az repos create --name $(repoName)
-   
-    echo "Creating folders in the repository..."
-    git clone $(repoUrl) $(repoName)
-    cd $(repoName)
-    mkdir folder1 folder2 folder3
-    git add .
-    git commit -m "Create initial folders"
-    git push origin master
-   
-    echo "Applying build policy to the repository..."
-    az repos policy build create --blocking true --branch master --build-definition-id $(buildDefinitionId) --display-name "Build Policy" --enabled true --manual-queue-only false --queue-on-source-update-only true --repository-id $(repositoryId) --valid-duration 0
-   
-    echo "Repository and policy creation completed."
-  displayName: 'Create Azure Repo, Folders, and Apply Build Policy'
-  env:
-    clientId: $(clientId)
-    clientSecret: $(clientSecret)
-    tenantId: $(tenantId)
+  - job: Create_Repo
+    displayName: 'Create Azure Repo'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - checkout: none
+    - script: |
+        echo "Logging in to Azure..."
+        az login --service-principal -u $(clientId) -p $(clientSecret) --tenant $(tenantId)
+      
+        echo "Configuring defaults..."
+        az devops configure --defaults organization=$(orgUrl) project=$(projectName)
+      
+        echo "Creating a new Azure Repo named $(repoName)..."
+        az repos create --name $(repoName)
+      
+        echo "Cloning the repository..."
+        git clone $(repoUrl) $(repoName)
+        cd $(repoName)
+      
+        echo "Creating folders in the repository..."
+        mkdir folder1 folder2 folder3
+        git add .
+        git commit -m "Create initial folders"
+        git push origin master
+      
+        echo "Applying build policy to the repository..."
+        az repos policy build create --blocking true --branch master --build-definition-id $(buildDefinitionId) --display-name "Build Policy" --enabled true --manual-queue-only false --queue-on-source-update-only true --repository-id $(repositoryId) --valid-duration 0
+      displayName: 'Setup Azure Repo'
