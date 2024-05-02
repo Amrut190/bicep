@@ -5,8 +5,8 @@ name: Create Repo
 
 variables:
   azureServiceConnection: 'ash2'
-  # location: 'eastus'
-  # templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
+  orgUrl: 'https://dev.azure.com/Dappverse'
+  projectName: 'Alz'
   # templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
   # resourceGroupName: 'budgetrg'
 
@@ -38,7 +38,7 @@ stages:
         cd $(repoName)
       
         echo "Creating folders in the repository..."
-        mkdir folder1 folder2 folder3
+        mkdir Infra Docs Engg 
         git add .
         git commit -m "Create initial folders"
         git push origin master
