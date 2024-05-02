@@ -8,13 +8,11 @@ parameters:
   displayName: Repo to be created
 
 variables:
+  group: secrets
   azureServiceConnection: 'ash2'
   orgUrl: 'https://dev.azure.com/Dappverse'
   projectName: 'Alz'
-  group: secrets
-  # clientId: $(clientId)
-  # clientSecret: $(clientSecret)
-  # TenantId: $(tenantId)
+
 
 pool:
   name: 'Azure Pipelines'
