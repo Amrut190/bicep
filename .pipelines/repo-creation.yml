@@ -39,9 +39,9 @@ stages:
         # git add .
         # git commit -m "Create initial folders"
         # git push origin main
-        $repos = $repositoryid | ConvertFrom-Json 
-        $repositoryid_created = $repos.id
-        $ri = $repos.id
+        repos=$(echo "$repositoryid" | jq -r '.id')
+        repositoryid_created="$repos"
+        ri="$repos"
         echo "##vso[task.setvariable variable=ri]$ri"
 
         echo "Applying build policy to the repository..."
