@@ -26,7 +26,7 @@ stages:
     - checkout: none
     - script: |
         echo "Logging in to Azure..."
-        az login --service-principal -u ${clientId} -p ${clientSecret} --tenant ${tenantId}
+        az login --service-principal -u cbbf8f92-744e-4daf-a996-a02d1179cbc2 -p ${clientSecret} --tenant ${tenantId}
       
         echo "Configuring defaults..."
         az devops configure --defaults organization=$(orgUrl) project=$(projectName)
