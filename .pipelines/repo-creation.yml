@@ -32,13 +32,18 @@ stages:
         echo "Creating a new Azure Repo named ${{parameters.RepoName}}..."
         az repos create --name ${{parameters.RepoName}}
    
-        echo "Cloning the repository..."
-        git clone $(orgUrl)/$(projectName)/_git/${{parameters.RepoName}} ${{parameters.RepoName}}
-        cd ${{parameters.RepoName}}
-        mkdir folder1 folder2 folder3
-        git add .
-        git commit -m "Create initial folders"
-        git push origin main
-   
+        # echo "Cloning the repository..."
+        # git clone $(orgUrl)/$(projectName)/_git/${{parameters.RepoName}} ${{parameters.RepoName}}
+        # cd ${{parameters.RepoName}}
+        # mkdir folder1 folder2 folder3
+        # git add .
+        # git commit -m "Create initial folders"
+        # git push origin main
+        $repos = $repositoryid | ConvertFrom-Json 
+        $repositoryid_created = $repos.id
+        $ri = $repos.id
+        echo "##vso[task.setvariable variable=ri]$ri"
+
         echo "Applying build policy to the repository..."
-        az repos policy build create --blocking true --branch master --build-definition-id $(buildDefinitionId) --display-name "Build Policy" --enabled true --manual-queue-only false --queue-on-source-update-only true --repository-id $(repositoryId) --valid-duration 0
+        # az repos policy build create --blocking true --branch master --build-definition-id $(buildDefinitionId) --display-name "Build Policy" --enabled true --manual-queue-only false --queue-on-source-update-only true --repository-id $(repositoryId) --valid-duration 0
+        az repos policy build create --blocking true --branch master --build-definition-id 352 --display-name "'PR Build validation'" --enabled true --manual-queue-only false --queue-on-source-update-only true --repository-id $(repositoryId) --valid-duration 0
