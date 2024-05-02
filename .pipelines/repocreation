@@ -1,3 +1,27 @@
+trigger:
+- master
+
+name: Create Repo
+
+
+variables:
+  # vmImageName: 'ubuntu-latest'
+
+  azureServiceConnection: 'ash2'
+  location: 'eastus'
+  templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
+  templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
+  resourceGroupname: budgetrg
+
+pool: default
+  # vmImage: $(vmImageName)
+
+stages:  
+
+- stage: Create Repo
+  jobs:
+  - job: Create Repo
+    displayName: Create Repo
 steps:
 - script: |
     echo "Logging in to Azure..."
