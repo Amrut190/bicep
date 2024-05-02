@@ -37,12 +37,12 @@ stages:
         az repos create --name ${{parameters.RepoName}}
    
         echo "Creating folders in the repository..."
-        git clone $(repoUrl) $(RepoName)
-        cd $(RepoName)
+        git clone $(Orgurl/parameters.RepoName) ${{parameters.RepoName}}
+        cd ${{parameters.RepoName}}
         mkdir folder1 folder2 folder3
         git add .
         git commit -m "Create initial folders"
-        git push origin master
+        git push origin main
    
         echo "Applying build policy to the repository..."
         az repos policy build create --blocking true --branch master --build-definition-id $(buildDefinitionId) --display-name "Build Policy" --enabled true --manual-queue-only false --queue-on-source-update-only true --repository-id $(repositoryId) --valid-duration 0
