@@ -33,8 +33,8 @@ stages:
         echo "Configuring defaults..."
         az devops configure --defaults organization=$(orgUrl) project=$(projectName)
    
-        echo "Creating a new Azure Repo named $(RepoName)..."
-        az repos create --name $(RepoName)
+        echo "Creating a new Azure Repo named ${{parameters.RepoName}}..."
+        az repos create --name $${{parameters.RepoName}}
    
         echo "Creating folders in the repository..."
         git clone $(repoUrl) $(RepoName)
