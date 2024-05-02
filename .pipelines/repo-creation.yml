@@ -4,7 +4,8 @@ trigger:
 name: Create Repo
 
 parameters:
-  repoName: ''  # Define the repository name as a parameter
+- name: RepoName
+  displayName: Repo to be created
 
 variables:
   azureServiceConnection: 'ash2'
