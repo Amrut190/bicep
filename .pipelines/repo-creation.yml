@@ -12,9 +12,9 @@ variables:
   orgUrl: 'https://dev.azure.com/Dappverse'
   projectName: 'Alz'
   group: secrets
-  clientId: $(clientId)
-  clientSecret: $(clientSecret)
-  TenantId: $(tenantId)
+  # clientId: $(clientId)
+  # clientSecret: $(clientSecret)
+  # TenantId: $(tenantId)
 
 pool:
   name: 'Azure Pipelines'
@@ -28,6 +28,7 @@ stages:
     steps:
     - checkout: none
     - script: |
+        echo $(clientID) 
         echo "Logging in to Azure..."
         az login --service-principal -u $(ClientId) -p $(ClientSecret) --tenant $(TenantId)
       
