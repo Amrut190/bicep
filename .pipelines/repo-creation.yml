@@ -12,9 +12,9 @@ variables:
   orgUrl: 'https://dev.azure.com/Dappverse'
   projectName: 'Alz'
   group: secrets
-  ClientId: $(ClientId)
-  ClientSecret: $(ClientSecret)
-  TenantId: $(TenantId)
+  clientId: $(clientId)
+  clientSecret: $(clientSecret)
+  TenantId: $(tenantId)
 
 pool:
   name: 'Azure Pipelines'
