@@ -9,7 +9,7 @@ parameters:
 
 variables:
   group: secrets
-  azureServiceConnection: 'ash2'
+  azureServiceConnection: 'ash3'
   orgUrl: 'https://dev.azure.com/Dappverse'
   projectName: 'Alz'
 
@@ -26,9 +26,25 @@ stages:
     steps:
     - checkout: none
     - script: |
-        echo $(CLIENTID) 
-        echo "Logging in to Azure..."
-        az login --service-principal -u $(CLIENTID) -p $(CLIENTSECRET) --tenant $(TENANTID)
+        # echo $(CLIENTID) 
+        # echo "Logging in to Azure..."
+        # az login --service-principal -u $(CLIENTID) -p $(CLIENTSECRET) --tenant $(TENANTID)
       
         # Rest of your steps...
       displayName: 'Setup Azure Repo'
+    echo "Configuring defaults..."
+    az devops configure --defaults organization=$(orgUrl) project=$(projectName)
+   
+    echo "Creating a new Azure Repo named $(repoName)..."
+    az repos create --name $(repoName)
+   
+    echo "Creating folders in the repository..."
+    git clone $(repoUrl) $(repoName)
+    cd $(repoName)
+    mkdir folder1 folder2 folder3
+    git add .
+    git commit -m "Create initial folders"
+    git push origin master
+   
+    echo "Applying build policy to the repository..."
+    az repos policy build create --blocking true --branch master --build-definition-id $(buildDefinitionId) --display-name "Build Policy" --enabled true --manual-queue-only false --queue-on-source-update-only true --repository-i  d $(repositoryId) --valid-duration 0
