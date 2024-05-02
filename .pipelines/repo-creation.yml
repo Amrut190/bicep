@@ -12,6 +12,12 @@ variables:
   orgUrl: 'https://dev.azure.com/Dappverse'
   projectName: 'Alz'
   group: secrets
+  - name: clientId
+    value: $(clientId)
+  - name: clientSecret
+    value: $(clientSecret)
+  - name: TenantId
+    value: $(TenantId)
 
 pool:
   name: 'Azure Pipelines'
@@ -26,24 +32,7 @@ stages:
     - checkout: none
     - script: |
         echo "Logging in to Azure..."
-        az login --service-principal -u cbbf8f92-744e-4daf-a996-a02d1179cbc2 -p ${clientSecret} --tenant ${tenantId}
+        az login --service-principal -u $(ClientId) -p $(ClientSecret) --tenant $(TenantId)
       
-        echo "Configuring defaults..."
-        az devops configure --defaults organization=$(orgUrl) project=$(projectName)
-      
-        echo "Creating a new Azure Repo named ${{ parameters.repoName }}..."
-        az repos create --name ${{ parameters.repoName }}
-      
-        echo "Cloning the repository..."
-        git clone $(repoUrl) ${{ parameters.repoName }}
-        cd ${{ parameters.repoName }}
-      
-        echo "Creating folders in the repository..."
-        mkdir Infra Docs Engg 
-        git add .
-        git commit -m "Create initial folders"
-        git push origin master
-      
-        echo "Applying build policy to the repository..."
-        az repos policy build create --blocking true --branch master --build-definition-id $(buildDefinitionId) --display-name "Build Policy" --enabled true --manual-queue-only false --queue-on-source-update-only true --repository-id $(repositoryId) --valid-duration 0
+        # Rest of your steps...
       displayName: 'Setup Azure Repo'
