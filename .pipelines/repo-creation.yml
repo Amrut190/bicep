@@ -11,6 +11,7 @@ variables:
   azureServiceConnection: 'ash2'
   orgUrl: 'https://dev.azure.com/Dappverse'
   projectName: 'Alz'
+  group: secrets
 
 pool:
   name: 'Azure Pipelines'
