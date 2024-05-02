@@ -26,9 +26,9 @@ stages:
     steps:
     - checkout: none
     - script: |
-        echo $(clientID) 
+        echo $(clientId) 
         echo "Logging in to Azure..."
-        az login --service-principal -u $(ClientId) -p $(ClientSecret) --tenant $(TenantId)
+        az login --service-principal -u $(clientId) -p $(clientSecret) --tenant $(tenantId)
       
         # Rest of your steps...
       displayName: 'Setup Azure Repo'
