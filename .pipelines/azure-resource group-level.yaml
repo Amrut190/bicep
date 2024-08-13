@@ -55,7 +55,7 @@ stages:
     parameters:
       deploymentScope: 'Resourcegroup'
       deploymentmode: 'Validation' 
-      RgName: 'budgetrg'
+      RgName: 'biceprg'
 
 
 - stage: Preview
