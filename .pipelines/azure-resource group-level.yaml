@@ -1,5 +1,6 @@
 trigger:
 - master
+- Dev
 
 name: Deploy Bicep files RESOURCE GROUP LEVEL
 
@@ -13,9 +14,10 @@ variables:
   templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
   resourceGroupname: budgetrg
 
-pool: default
+# pool: default
   # vmImage: $(vmImageName)
-
+pool: 
+  vmImage: ubuntu-latest
 stages:  
 
 - stage: Lint
