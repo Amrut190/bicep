@@ -51,9 +51,9 @@ stages:
   jobs:
   - template: azure-bicep-tasks.yml  # Template reference
     parameters:
-    deploymentScope: 'Resourcegroup'
-    deploymentmode: 'Validation' 
-    RgName: 'budgetrg'
+      deploymentScope: 'Resourcegroup'
+      deploymentmode: 'Validation' 
+      RgName: 'budgetrg'
 
 
 - stage: Preview
