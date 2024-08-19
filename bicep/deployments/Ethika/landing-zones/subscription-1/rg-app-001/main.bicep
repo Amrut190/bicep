@@ -39,17 +39,17 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-@sys.description('Configure auditing for Key Vault.')
-resource logs 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = if (!empty(workspaceId)) {
-  name: 'service'
-  scope: vault
-  properties: {
-    workspaceId: workspaceId
-    logs: [
-      {
-        category: 'AuditEvent'
-        enabled: true
-      }
-    ]
-  }
-}
+// @sys.description('Configure auditing for Key Vault.')
+// resource logs 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = if (!empty(workspaceId)) {
+//   name: 'service'
+//   scope: vault
+//   properties: {
+//     workspaceId: workspaceId
+//     logs: [
+//       {
+//         category: 'AuditEvent'
+//         enabled: true
+//       }
+//     ]
+//   }
+// }
