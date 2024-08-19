@@ -71,8 +71,8 @@ stages:
         inlineScript: |
           az group create --name $(resourceGroupname) --location $(location)
           az deployment group what-if \
-            --template-file 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-002/deploy.bicep' \
-            --parameters 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-002/deploy.bicepparam' \
+            --template-file 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep' \
+            --parameters 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam' \
             --resource-group $(resourceGroupname)
 
 - stage: Deploy
