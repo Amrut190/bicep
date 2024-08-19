@@ -8,7 +8,7 @@ name: Deploy Bicep files RESOURCE GROUP LEVEL
 variables:
   # vmImageName: 'ubuntu-latest'
 
-  azureServiceConnection: 'Appverse Subscription (dc2b1a3b-1f25-405f-a2ed-e8bdbbf14c83)'
+  azureServiceConnection: 'Appverse-biceps-svc'
   location: 'eastus'
   templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
   templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
