@@ -7,7 +7,7 @@ name: Deploy Bicep files SUBSCRIPTION LEVEL
 variables:
   # vmImageName: 'ubuntu-latest'
 
-  azureServiceConnection: 'ash2'
+  azureServiceConnection: 'Appverse-biceps-svc'
   location: 'australiaeast'
   templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
   templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
