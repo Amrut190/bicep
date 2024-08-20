@@ -7,12 +7,14 @@
 
 @description('Configures the location to deploy the Azure resources.')
 param location string = resourceGroup().location
+param name string
+param resourceGroupname string
 
 // An example Storage Account
 module storage '../../../../../modules/storage/v1/main.bicep' = {
   name: 'storage-deployment'
   params: {
-    name: 'stbicepapp002'
+    name: name
 
     // The Azure location must be valid
     // Try setting this to 'Antarctica'
@@ -39,7 +41,7 @@ module keyvault '../../../../../modules/keyvault/v1/main.bicep' = {
 
     // Must have a workspace
     // Try commenting out this line to have the Azure.KeyVault.Logs rule fail.
-    workspaceId: '/subscriptions/<subscription_id>/resourceGroups/rg-test/providers/Microsoft.OperationalInsights/workspaces/latest001'
+    // workspaceId: '/subscriptions/<subscription_id>/resourceGroups/rg-test/providers/Microsoft.OperationalInsights/workspaces/latest001'
 
     // An env tag must be test, dev, or prod.
     // Try setting this to 'demo' to fail the Org.Azure.Tags rule.
