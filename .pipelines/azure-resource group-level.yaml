@@ -10,8 +10,8 @@ variables:
 
   azureServiceConnection: 'Appverse-biceps-svc'
   location: 'eastus'
-  templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/main.bicep'
-  templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-001/dev.bicepparam'
+  templateFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-002/deploy.bicep'
+  templateParameterFile: 'bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-002/deploy.bicepparam'
   resourceGroupname: biceprg
 
 # pool: default
