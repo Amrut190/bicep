@@ -1,6 +1,6 @@
 using './deploy.bicep'
 
-param name = 'kv-example-09190'
+param name = 'stg77689'
 param resourceGroupname = 'biceprg'
 
 
