@@ -1,20 +1,15 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+- Azure Bicep is a domain-specific language (DSL) for deploying Azure resources declaratively. It is designed to simplify the authoring experience for Infrastructure as Code (IaC) on Azure, providing an alternative to writing JSON-based ARM templates. Bicep files compile directly into ARM templates, ensuring you can leverage all the features of the Azure Resource Manager while writing less code. 
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+1.	Create a app registration & a client secreat . Update the values of service priciple variables .
+2.	Create the required module in the path - bicep/modules
+3.  Add the modules in the path - bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-002/deploy.bicep
+4.  Create the required parameters to deploy the modlues in the path - bicep/deployments/Ethika/landing-zones/subscription-1/rg-app-002/deploy.bicepparam
+5.  Create the service connection to azure portal in project settings .
+6.  Change the parameter value(azureServiceConnection) in .pipelines/azure-resource group-level.yaml
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+references https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep
